@@ -9,6 +9,9 @@ on CBPRO as of 02/01/2021. On this date the index was normalized to 1.0. When th
 By using this code ( index-balancer.py or index-balancer-TEST.py) one can set up a trading/investing system that will stay in
 the market and re-balance the portfolio automatically.
 
+Additionally this code can be used on multiple portfolios, so it can be used to copy trade on multiple CBPRO accounts using
+a single script call.
+
 ## How it works
 Basically the index-balancer.py code reads the gross amount of money in terms of crypto and USD
 and USDC available and divides it evenly to produce a target hold amount.
