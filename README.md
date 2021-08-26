@@ -54,8 +54,9 @@ FADE_U = 2.1
 FADE_L = 1.8
 ```
 
-The ****ticker_filename**** is where it will get the price data from.
-The FILL_SCALER is the amount that it will hold where 0 is nothing and 1.0 the
+****ticker_filename**** is where it will get the price data from. It is a valid UNIX/LINUX Path.
+
+**FILL_SCALER** is the amount that it will hold where 0 is nothing and 1.0 the
 max, a 100% of the target and the portfolio will be fully funded.
 
 ****NO_BUY_ZONE**** is a number in terms of index value below which it will not buy
@@ -210,8 +211,10 @@ You must pass them as setup via Coinbase Pro API as command line parameters.
 https://help.coinbase.com/en/pro/other-topics/api/how-do-i-create-an-api-key-for-coinbase-pro
 
 ## Ticker data
-###cbpro-api-price-volume-ticker-get.py
+### cbpro-api-price-volume-ticker-get.py
+
 The ticker filename is required for the location of the price/volume data to be pulled in from CBPRO.
+The locations of the itcker filename is specified in defines.py.
 The ticker price and volume can be pulled down by calling...
 
 cbpro-api-price-volume-ticker-get.py
@@ -241,7 +244,7 @@ http://heart-centered-living.org/public/cbpro-data/cbpro_crypto_price_volume_fil
 
 ***cbpro_buy_sell.py*** - A thin layer of code between the code such as index-balancer and the CBPRO API. This code is there to provide an interface layer, hopefully makes the code portable to other API's other than CBPRO.
 
-**debugtrace.py** - This is imported in cbpro-api-price-volume-ticker-get.py as dt. It is used as a tracer for debugging and produces a log file when the code is sun. It is used for simple breadcrumb trail
+**debugtrace.py** - This is imported in cbpro-api-price-volume-ticker-get.py as dt. It is used as a tracer for debugging and produces a log file when the code is run. It is used for simple breadcrumb trail
 style debugging. Can be used in any other python file as one wishes.
 
 ## Other Support Files
@@ -252,7 +255,7 @@ style debugging. Can be used in any other python file as one wishes.
 **defines.py** - Holds Ticker Filename and adjustable parameters.
 
 **cbpro-api-price-volume-ticker-get.py** - Gets price and volume data from CBPRO via the API. Stores it
-in a CSV which is named in defines.py. This file is consumed by the index-balancer.py code in order to 
+in a CSV which is named in defines.py. This CSV file is consumed by the index-balancer.py code in order to 
 get a history of price and volume data. This ticker has to be updated periodically, hourly or other time frame. cbpro-api-price-volume-ticker-get.py called perodically via CRON is the way to keep the 
 ticker data current. This file will create a live_dict.json as another output as well. This file keeps a copy of the most recent data and uses it to impute missing values should a failure to grab data occurs.
 
@@ -261,26 +264,27 @@ Set the path in defines.py to this file and the code will run.
 Test using the sim-index-balancer.py and it should run through it and make
 no trades but, will prove all is in place to run fully.
 
-**example.sh** - An example of how to call the code in a script. Calls the portfolio-cp code first to store away the current amount in the portfolio, this is optional.
+**example.sh** - An example of how to call the code in a script. Calls the portfolio-cp.py code first to store away the current amount in the portfolio, this is optional.
 
 ## Information
 The code in this repo is generally compatable with the cbpro-cli-tools repo and both can function
-together. Note that the cbpro-api-price-volume-ticker-get.py  is newer that the ticker grab code
-in that repo also be careful with the coretamodule and the cbpro_buy_sell.py as they are 
+together. Note that the cbpro-api-price-volume-ticker-get.py  is newer that the legcay ticker grab code
+in that repo. Both do the same thing the legacy version supports fewer coins. The newer version has more coins
+supported and is easier to maintain.
+-When new coins are added it is necessary to fill zeroes in the columns above the new values in the CSV file.
+-Also be careful with the coretamodule and the cbpro_buy_sell.py as they are 
 possiblly newer as well as more cryptos get added to CBPRO occasionally.
 
-
-
-	EX: python3 cbpro-api-price-volume-ticker-5-cryptos-csv.py
+	Legacy ticker grab code is called: python3 cbpro-api-price-volume-ticker-5-cryptos-csv.py
 
 ## Action 
-These pieces of code perform an action and will perform the action automatically without prompting by the user. When caled via a script it is often desirable to pipe the output to a file such as index-balancer.out for debug and monitoring.
+These pieces of code  ill perform the action automatically without prompting by the user. When called via a script it is often desirable to pipe the output to a file such as index-balancer.out for debug and monitoring.
 - See example.sh for a gist of a script that can be used as a template.
 
 
 
 
-##Glossary:
+## Glossary:
 action = buy or sell.
 
 currency = the currency to buy into or sell from.
