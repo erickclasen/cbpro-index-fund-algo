@@ -1,3 +1,20 @@
+#!/usr/bin/python
+#title			:coretamodule.py
+#description	: Collection of Technical Analysis Functions and other support functions
+# for crypto algo trafing using the CB Pro API
+# ALso contains helper functions for readin assets avail, and etc.
+#author			:Erick Clasen
+#date			:20210822
+#version		:0.1
+#usage			:imported into py code
+#notes			:
+#python_version	: 2.7.6
+#python_version	: Python 3.4.3
+#==============================================================================
+
+
+this_file = "coretamodule.py"
+
 import csv
 import json
 from cbpro_buy_sell import cbpro_read_available
